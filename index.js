@@ -2,6 +2,13 @@
 const url = "https://api.transport.nsw.gov.au/v1/publictransport/timetables/complete/gtfs"
 const apiKey = ""
 
+fetch("key.txt")
+    .then((response) => response.text())
+    .then((text) => {
+        apiKey = text
+    })
+    .catch((e) => console.error(e))
+
 const searchBox = document.querySelector(".search input")
 const searchBtn = document.querySelector(".search button")
 

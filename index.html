@@ -8,11 +8,45 @@
     </head>
     <body>
         <nav>
-            <div class="logo">
-                <a>NSW Transport</a>
+            <div class="row">
+                <div class="logo">
+                    <a>NSW Transport</a>
+                </div>
             </div>
         </nav>
-
+        <div class="content">
+            <div class="search-container">
+                <div class="row">
+                    <div class="search-options">
+                        <div class="search-items">
+                            <button class = "refresh-button">
+                                <svg class = "refresh" viewBox="0 0 48 48"xmlns="http://www.w3.org/2000/svg"><path d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z"/><path d="M0 0h48v48h-48z" fill="none"/></svg>
+                                <a>Refresh API</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="location-container">
+                        <div class="start-search">
+                            <input type="text" value = "Central Station" class="search-box">
+                        </div>
+                        <div class="space">
+                            <button class="swap-button">
+                                <svg class="reverse" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M13.98 22l-7.98 8 7.98 8v-6h14.02v-4h-14.02v-6zm28.02-4l-7.98-8v6h-14.02v4h14.02v6l7.98-8z"/><path d="M0 0h48v48h-48z" fill="none"/></svg>
+                            </button>
+                        </div>
+                        <div class="start-search">
+                            <input type="text" value = "" placeholder="Where to?" class="search-box">
+                        </div>
+                    </div>
+                    <div class="time-container">
+                        <input type="time" class="time-box">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
         <script src = index.js></script>
     </body>
 </head>
