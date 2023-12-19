@@ -1,33 +1,40 @@
-//API KEY: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJSWDVoUkJJWFl0V2IwWVY0VDg0TFlRNWZjdUI2VnB6SXd1bWlNV3IycG9VIiwiaWF0IjoxNzAyMDA1NTIxfQ.JiY-tAeN64on8k_Tm-HW28qt-eWkgxx6SfCbzzgiOuU
-const url = "https://api.transport.nsw.gov.au/v1/publictransport/timetables/complete/gtfs"
-const apiKey = ""
 
-fetch("key.txt")
-    .then((response) => response.text())
-    .then((text) => {
-        apiKey = text
+const url = "https://api.transport.nsw.gov.au/v1/publictransport/timetables/complete/gtfs"
+var apiKey = ""
+
+const refreshBtn = document.getElementById("refresh-button")
+const searchBtn = document.getElementById("search-button")
+const startSearch = document.getElementById("start-search")
+const endSearch = document.getElementById("end-search")
+
+refreshBtn.addEventListener("click", loadApi());
+
+function loadApi() {
+    var headers;
+    fetch("key.txt")
+        .then((response) => response.text())
+        .then((text) => {
+            apiKey = text
+            headers = new Headers({
+                "Authorization": 'apikey ${apiKey}'
+            })
     })
     .catch((e) => console.error(e))
 
-const searchBox = document.querySelector(".search input")
-const searchBtn = document.querySelector(".search button")
-
-const headers = new Headers({
-    "Authorization": 'apikey ${apiKey}'
-})
-
-fetch(url, {method: "GET", headers: headers})
-    .then(response => {
-        if (response.ok){
-            return response.json();
-        }
-        else{
-            throw new Error('Request failed with status: ${response.status}')
-        }
-    })
-    .then(data => {
-        console.log(data)
-    })
-    .catch(error =>{
-        console.error(error);
-    });
+    fetch(url, {method: "GET", headers: headers})
+        .then(response => {
+            if (response.ok){
+                return response.json();
+            }
+            else{
+                throw new Error('Request failed with status: ${response.status}')
+            }
+        })
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error =>{
+            console.error(error);
+        });
+    console.log("yay!");
+}
