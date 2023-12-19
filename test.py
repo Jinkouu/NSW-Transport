@@ -3,6 +3,7 @@ from io import BytesIO
 import zipfile
 import os
 import csv
+from flask import Flask, render_template
 
 url = "https://api.transport.nsw.gov.au/v1/publictransport/timetables/complete/gtfs"
 
@@ -53,18 +54,25 @@ def initialise():
     else:
         print("all good") 
 
-start = "Cabramatta Station"
-end = "Central Station"
-
-def findRoutes(start, end):
-    stops = []
-    with open("gtfs\\stops.txt") as input:
-        for lines in input:
-            lines = lines.strip().split(',')
-            stops.append(lines)
+#start = "Cabramatta Station"
+#end = "Central Station"
+#
+#def findRoutes(start, end):
+#    stops = []
+#    with open("gtfs\\stops.txt") as input:
+#        for lines in input:
+#            lines = lines.strip().split(',')
+#            stops.append(lines)
     
+application = Flask(__name__)
 
+@application.route('/')
+def index():
+    initialise()
+    return render_template('index.html')
 
+if __name__ =="__main__":
+    application.run(debug=True)
 
-initialise()
-findRoutes(start, end)
+#initialise()
+#findRoutes(start, end)
