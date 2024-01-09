@@ -45,6 +45,8 @@
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^16.3.1",
-    "nodemon": "^3.0.2"
+    "gtfs-utils": "^5.1.0",
+    "nodemon": "^3.0.2",
+    "requirejs": "^2.3.6"
   }
 }
