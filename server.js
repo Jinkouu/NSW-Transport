@@ -18,14 +18,14 @@ app.use((req, res, next) => {
   });
 
 app.post('/stopFinder', (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
     const url = `${apiEndpoint}stop_finder?${req.body.queryString}`
     axios({
         method: 'GET',
         url: url,
-        responseType: 'rapidJSON',
+        responseType: 'json',
         headers: {
-            'Authorization': `Bearer ${APIKEY}`
+            'Authorization': `apikey ${APIKEY}`
         },
     }).then(data => res.json(data.data.locations))
 })

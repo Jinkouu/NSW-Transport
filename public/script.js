@@ -47,6 +47,17 @@ searchBtn.addEventListener("click", ()=>{
             queryString: `${queryString}`
         })
     }).then(res => res.json()).then(data => {
+        let bestMatch = null; 
+        const locations = data.locations;
+
+        bestMatch = locations.find(location => location.isBest === true);
+
+        if (bestMatch){
+            const locationId = bestMatch.id;
+            const name = bestMatch.name;
+            console.log(locationId);
+            console.log(name);
+        }
         //setLocationData(data, place.formatted_address)
     })
 })
