@@ -22,8 +22,15 @@ const refreshBtn = document.getElementById("refresh-button")
 const searchBtn = document.getElementById("search-button")
 const startSearch = document.getElementById("start-search")
 const endSearch = document.getElementById("end-search")
+const startDropdownSearch = document.getElementById("start-search-dropdown")
 
+startDropdownSearch.addEventListener("input", ()=>{
 
+})
+
+startSearch.addEventListener("click", ()=>{
+    startDropdownSearch.style.display = (startDropdownSearch.style.display === "none") ? "flex" : "none";
+})
 
 //async function check()
 
@@ -47,9 +54,10 @@ searchBtn.addEventListener("click", ()=>{
             queryString: `${queryString}`
         })
     }).then(res => res.json()).then(data => {
-        let bestMatch = null; 
-        const locations = data.locations;
-
+        console.log(data);
+        var bestMatch = null; 
+        var locations = data;
+        //console.log(locations);
         bestMatch = locations.find(location => location.isBest === true);
 
         if (bestMatch){
@@ -58,7 +66,7 @@ searchBtn.addEventListener("click", ()=>{
             console.log(locationId);
             console.log(name);
         }
-        //setLocationData(data, place.formatted_address)
+        setLocationData(data, place.formatted_address)
     })
 })
 
