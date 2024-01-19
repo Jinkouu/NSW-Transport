@@ -236,7 +236,6 @@ nav > .row > .logo{
 }
 .end-search-dropdown {
     position: absolute;
-    left: 490px;
     width: 450px;
     flex-direction: column;
     z-index: 7;
@@ -251,7 +250,7 @@ nav > .row > .logo{
 .dropbox-search-box{
     margin: 0px 10px 0px 10px;
     width: 100%;
-    height: 50px;
+    height: 55px;
     background: #ffffff;
     color: #3f3f3f;
     border-style: none;
