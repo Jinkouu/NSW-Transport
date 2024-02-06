@@ -284,7 +284,23 @@ nav > .row > .logo{
 .result-box ul li:hover{
     background-color:#f3f3f3;
 }
-
+/*travel cards*/
+.travel-card{
+    width: 1024px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    border-radius: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 1px solid #d1d1d1;
+}
+.travel-card .row{
+    padding-left: 30px;
+    padding-right: 30px;
+}
 
 @media screen and (max-width: 1024px) {
     .search-container {

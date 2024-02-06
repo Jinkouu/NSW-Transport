@@ -30,6 +30,18 @@ app.post('/stopFinder', (req, res) => {
     }).then(data => res.json(data.data.locations))
 })
 
+app.post('/tripFinder', (req, res) => {
+    const url = `${apiEndpoint}trip?${req.body.queryString}`
+    axios({
+        method: 'GET',
+        url: url,
+        responseType: 'json',
+        headers: {
+            'Authorization': `apikey ${APIKEY}`
+        },
+    }).then(data => res.json(data.data.locations))
+})
+
 app.listen(3000, () => {
     console.log('Server started')
 })
