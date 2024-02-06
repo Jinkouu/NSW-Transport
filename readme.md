@@ -1,2 +1,3 @@
-https://github.com/public-transport/gtfs-utils
-npm install gtfs-utils
+
+npm run devStart
+[localhost:3](http://localhost:3000/)http://localhost:3000/
