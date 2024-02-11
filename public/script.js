@@ -172,16 +172,30 @@ document.addEventListener("mouseup", (e)=> {
     }
 });
 
+//----------------------date and time picker ----------------
+const formatInitialDate = (date) => {
+    return date.toISOString().slice(0, 10);
+}
+const formatInitialTime = (date) => {
+    return date.toTimeString().slice(0, 5);
+  };
+function updateDateAndTime(){
+    const dateInput = document.getElementById("date");
+    const timeInput = document.getElementById("time");
+    const currentDate = new Date();
+
+    dateInput.value = formatInitialDate(currentDate);
+    timeInput.value = formatInitialTime(currentDate);
+}
+updateDateAndTime(); //runs on start and sets time and date to current local time and date
 //-------------------api call for trip-------------------
 // Format the date and time
 const formatDate = (date) => {
     return date.toISOString().slice(0, 10).replace(/-/g, '');
 };
-  
 const formatTime = (date) => {
     return date.toISOString().slice(11, 16).replace(':', '');
 };
-
 function fetchTrips(time, startLocation, endLocation) {
     return new Promise((resolve, reject) => {
         const params = {
