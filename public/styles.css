@@ -167,9 +167,11 @@ nav > .row > .logo{
 	border-radius: 5px;
     height: 100%;
     width: 260px;
+    color: #3f3f3f;
 	
 	&:focus-within {
 		border-color: #3f3f3f;
+        color: #000000;
 	}
 	
 	input {

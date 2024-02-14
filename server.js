@@ -39,7 +39,7 @@ app.post('/tripFinder', (req, res) => {
         headers: {
             'Authorization': `apikey ${APIKEY}`
         },
-    }).then(data => res.json(data.data.locations))
+    }).then(data => res.json(data.data))
 })
 
 app.listen(3000, () => {

@@ -178,7 +178,7 @@ const formatInitialDate = (date) => {
 }
 const formatInitialTime = (date) => {
     return date.toTimeString().slice(0, 5);
-  };
+};
 function updateDateAndTime(){
     const dateInput = document.getElementById("date");
     const timeInput = document.getElementById("time");
@@ -190,19 +190,19 @@ function updateDateAndTime(){
 updateDateAndTime(); //runs on start and sets time and date to current local time and date
 //-------------------api call for trip-------------------
 // Format the date and time
-const formatDate = (date) => {
-    return date.toISOString().slice(0, 10).replace(/-/g, '');
-};
-const formatTime = (date) => {
-    return date.toISOString().slice(11, 16).replace(':', '');
-};
-function fetchTrips(time, startLocation, endLocation) {
+function formatDate(date) {
+    return date.slice(0, 10).replace(/-/g, '');
+}
+function formatTime(time) {
+    return time.slice(0, 5).replace(':', '');
+}
+function fetchTrips(startLocation, endLocation, date, time) {
     return new Promise((resolve, reject) => {
         const params = {
             outputFormat: 'rapidJSON',
             coordOutputFormat: 'EPSG:4326',
             depArrMacro: 'dep',
-            itdDate: formatDate(time),
+            itdDate: formatDate(date),
             itdTime: formatTime(time),
             type_origin: 'stop',
             name_origin: `${startLocation}`,
@@ -228,7 +228,21 @@ function fetchTrips(time, startLocation, endLocation) {
 }
 
 searchBtn.addEventListener("click", ()=>{
-    console.log(startLocationId + " " + endLocationId);
+    //console.log(startLocationId + " " + endLocationId);
+    //use global startlocationId and endlocationID, get time/date from input
+    //216620 cabramatta
+    //central station 200060
+    const dateInput = document.getElementById("date");
+    const timeInput = document.getElementById("time");
+    //console.log(formatDate(dateInput.value));
+    //fetchTrips(startLocationId, endLocationId, dateInput.value, timeInput.value)
+    fetchTrips(216620, 200060, dateInput.value, timeInput.value)
+        .then(data =>{
+            console.log(data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
 })
 
 
