@@ -239,6 +239,55 @@ searchBtn.addEventListener("click", ()=>{
     fetchTrips(216620, 200060, dateInput.value, timeInput.value)
         .then(data =>{
             console.log(data);
+            data.forEach(journey =>{
+                const legs = journey.legs;
+                var fares = journey.fares;
+                var totalDuration = 0;
+                var summary = [];
+                var legNumber = 0;
+
+                var depart = null;
+                var arrive = null;
+
+                legs.forEach(leg =>{
+                    totalDuration += leg.duration;
+                    const origin = leg.origin;
+                    const destination = leg.destination;
+
+                    // Determine the trip departure time.
+                    // This is indicated by the departure time of the first leg.
+                    if(legNumber == 0){
+                        depart = new Date(origin.departureTimePlanned);
+                    }
+
+                    if(legNumber == legs.length - 1){
+                        arrive = new Date(origin.departureTimePlanned);
+                    }
+
+                    const transportation = leg.transportation;
+                    const routeType = transportation.product.class;
+
+                    switch(routeType){
+                        case 1: summary.push('Train'); break;
+                        case 4: summary.push('Light Rail'); break;
+                        case 5: summary.push('Bus'); break;
+                        case 7: summary.push('Coach'); break;
+                        case 9: summary.push('Ferry'); break;
+                        case 11: summary.push('School Bus'); break;
+                        case 99: summary.push('Walk'); break;
+                        case 100: summary.push('Walk'); break;
+                        case 107: summary.push('Cycle'); break;
+                    }
+                    legNumber += 1;
+                });
+
+                var minutes = totalDuration/60;
+                // Output the departure, arrival, and duration
+                console.log(`${new Date(depart).toString()} - ${new Date(arrive).toString()} (${minutes} mins)`);
+                            
+                // Output the summary of leg types used for the trip
+                console.log(summary.join(' -> ') + '\n\n');
+            });
         })
         .catch(error => {
             console.error(error);
