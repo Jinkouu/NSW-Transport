@@ -330,6 +330,34 @@ nav > .row > .logo{
     padding-right: 30px;
 }
 
+.route-image{
+    width: 68px;
+}
+.time-service{
+    flex-direction: column;
+}
+.time{
+
+}
+.service{
+
+}
+.length-name{
+    flex-direction: column;
+}
+.length{
+
+}
+.name{
+
+}
+.stops{
+
+}
+.fare{
+    
+}
+
 @media screen and (max-width: 1024px) {
     .search-container {
         width: 640px;
