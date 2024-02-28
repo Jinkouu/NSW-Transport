@@ -332,30 +332,54 @@ nav > .row > .logo{
 
 .route-image{
     width: 68px;
+    text-align: center;
+    align-items: center;
 }
 .time-service{
     flex-direction: column;
 }
 .time{
-
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    line-height: 20px;
 }
 .service{
-
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    line-height: 16px;
+    color:#585858
 }
 .length-name{
     flex-direction: column;
 }
 .length{
-
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    line-height: 20px;
 }
 .name{
-
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    line-height: 16px;
+    color:#585858
 }
 .stops{
-
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    line-height: 20px;
 }
 .fare{
-    
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    line-height: 20px;
 }
 
 @media screen and (max-width: 1024px) {
