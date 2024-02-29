@@ -313,6 +313,11 @@ nav > .row > .logo{
     background-color:#f3f3f3;
 }
 /*travel cards*/
+#container{
+    display: flex;
+    flex-direction: column;
+}
+
 .travel-card{
     width: 1024px;
     display: flex;

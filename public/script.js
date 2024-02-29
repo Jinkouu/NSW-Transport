@@ -244,7 +244,10 @@ searchBtn.addEventListener("click", ()=>{
                 var fares = journey.fares;
                 var totalDuration = 0;
                 var summary = [];
+                var trainLineSummary = [];
+                var stationSummary = [];
                 var legNumber = 0;
+                var stopNumber = journey.interchanges;
 
                 var depart = null;
                 var arrive = null;
@@ -265,8 +268,12 @@ searchBtn.addEventListener("click", ()=>{
                     }
 
                     const transportation = leg.transportation;
-                    const routeType = transportation.product.class;
+                    trainLineSummary.push(transportation.disassembledName);
 
+                    const stationTransfer = transportation.destination.name;
+                    stationSummary.push(stationTransfer)
+
+                    const routeType = transportation.product.class;
                     switch(routeType){
                         case 1: summary.push('Train'); break;
                         case 4: summary.push('Light Rail'); break;
@@ -287,6 +294,70 @@ searchBtn.addEventListener("click", ()=>{
                             
                 // Output the summary of leg types used for the trip
                 console.log(summary.join(' -> ') + '\n\n');
+
+                //output onto the html + css
+                const container = document.getElementById("container");
+                const card = document.createElement("div");
+                card.classList.add("travel-card");
+                
+                const row = document.createElement("div");
+                row.classList.add("row");
+                
+                const routeImage = document.createElement("div");
+                routeImage.classList.add("route-image");
+                routeImage.textContent = "T";
+                ////////////////////////////// time-service related
+                const timeService = document.createElement("div");
+                timeService.classList.add("time-service");
+
+                const time = document.createElement("div");
+                time.classList.add("time");
+                time.textContent = depart.toLocaleString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    hour12: true,
+                    timeZoneName: 'short'
+                });
+
+                const service = document.createElement("div");
+                service.classList.add("service");
+                service.textContent = trainLineSummary.join(' -> ');  //testing if this works
+
+                timeService.appendChild(time);
+                timeService.appendChild(service);
+                /////////////////////////////// length-name related
+                const lengthName = document.createElement("div");
+                lengthName.classList.add("length-name");
+
+                const length = document.createElement("div");
+                length.classList.add("length");
+                length.textContent = minutes + "mins";
+
+                const name = document.createElement("div");
+                name.classList.add("name");
+                name.textContent = stationSummary.join(' -> ');
+
+                lengthName.appendChild(length);
+                lengthName.appendChild(name);
+                //////////////////////////////// stops + fare
+                const stops = document.createElement("div");
+                stops.classList.add("stops");
+                stops.textContent = stopNumber + " stops";
+
+                const fare = document.createElement("div");
+                fare.classList.add("fare");
+                fare.textContent = data.fare;
+
+                row.appendChild(routeImage);
+                row.appendChild(timeService);
+                row.appendChild(lengthName);
+                row.appendChild(stops);
+                row.appendChild(fare);
+
+                card.appendChild(row);
+
+                container.appendChild(card);
             });
         })
         .catch(error => {
