@@ -234,9 +234,14 @@ searchBtn.addEventListener("click", ()=>{
     //central station 200060
     const dateInput = document.getElementById("date");
     const timeInput = document.getElementById("time");
+    
+    const container = document.getElementById("container");
+    while(container.lastElementChild){
+        container.removeChild(container.lastElementChild)
+    }
     //console.log(formatDate(dateInput.value));
-    //fetchTrips(startLocationId, endLocationId, dateInput.value, timeInput.value)
-    fetchTrips(216620, 200060, dateInput.value, timeInput.value)
+    fetchTrips(startLocationId, endLocationId, dateInput.value, timeInput.value)
+    //fetchTrips(216620, 200060, dateInput.value, timeInput.value)
         .then(data =>{
             console.log(data);
             data.forEach(journey =>{
@@ -251,16 +256,19 @@ searchBtn.addEventListener("click", ()=>{
 
                 var depart = null;
                 var arrive = null;
+                var trainLine = null;
 
                 legs.forEach(leg =>{
                     totalDuration += leg.duration;
                     const origin = leg.origin;
                     const destination = leg.destination;
-
+                    
                     // Determine the trip departure time.
                     // This is indicated by the departure time of the first leg.
                     if(legNumber == 0){
                         depart = new Date(origin.departureTimePlanned);
+                        stationSummary.push(leg.origin.disassembledName)
+                        trainLine = leg.transportation.disassembledName;
                     }
 
                     if(legNumber == legs.length - 1){
@@ -270,7 +278,7 @@ searchBtn.addEventListener("click", ()=>{
                     const transportation = leg.transportation;
                     trainLineSummary.push(transportation.disassembledName);
 
-                    const stationTransfer = transportation.destination.name;
+                    const stationTransfer = leg.destination.disassembledName;
                     stationSummary.push(stationTransfer)
 
                     const routeType = transportation.product.class;
@@ -296,7 +304,6 @@ searchBtn.addEventListener("click", ()=>{
                 console.log(summary.join(' -> ') + '\n\n');
 
                 //output onto the html + css
-                const container = document.getElementById("container");
                 const card = document.createElement("div");
                 card.classList.add("travel-card");
                 
@@ -305,7 +312,7 @@ searchBtn.addEventListener("click", ()=>{
                 
                 const routeImage = document.createElement("div");
                 routeImage.classList.add("route-image");
-                routeImage.textContent = "T";
+                routeImage.textContent = trainLine;
                 ////////////////////////////// time-service related
                 const timeService = document.createElement("div");
                 timeService.classList.add("time-service");
@@ -322,7 +329,7 @@ searchBtn.addEventListener("click", ()=>{
 
                 const service = document.createElement("div");
                 service.classList.add("service");
-                service.textContent = trainLineSummary.join(' -> ');  //testing if this works
+                service.textContent = trainLineSummary.join(' -> ' );  //testing if this works
 
                 timeService.appendChild(time);
                 timeService.appendChild(service);
@@ -332,18 +339,23 @@ searchBtn.addEventListener("click", ()=>{
 
                 const length = document.createElement("div");
                 length.classList.add("length");
-                length.textContent = minutes + "mins";
+                length.textContent = minutes + " min";
 
                 const name = document.createElement("div");
                 name.classList.add("name");
-                name.textContent = stationSummary.join(' -> ');
+                name.textContent = stationSummary.join(' -> \n');
 
                 lengthName.appendChild(length);
                 lengthName.appendChild(name);
                 //////////////////////////////// stops + fare
                 const stops = document.createElement("div");
                 stops.classList.add("stops");
-                stops.textContent = stopNumber + " stops";
+                if(stopNumber > 0){
+                    stops.textContent = stopNumber + " stop";
+                }
+                else{
+                    stops.textContent = "Nonstop";
+                }
 
                 const fare = document.createElement("div");
                 fare.classList.add("fare");

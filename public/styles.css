@@ -316,6 +316,7 @@ nav > .row > .logo{
 #container{
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
 }
 
 .travel-card{
@@ -324,7 +325,7 @@ nav > .row > .logo{
     justify-content: space-between;
     flex-direction: column;
     flex-wrap: wrap;
-    margin-top: 30px;
+    margin-bottom: 10px;
     border-radius: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -341,6 +342,7 @@ nav > .row > .logo{
     align-items: center;
 }
 .time-service{
+    width: 150px;
     flex-direction: column;
 }
 .time{
@@ -358,6 +360,7 @@ nav > .row > .logo{
     color:#585858
 }
 .length-name{
+    width: 250px;
     flex-direction: column;
 }
 .length{
@@ -375,6 +378,7 @@ nav > .row > .logo{
     color:#585858
 }
 .stops{
+    width: 55px;
     font-size: 16px;
     font-weight: 500;
     letter-spacing: 0.1px;
