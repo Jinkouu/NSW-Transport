@@ -351,6 +351,10 @@ nav > .row > .logo{
     letter-spacing: 0.1px;
     line-height: 20px;
 }
+#timezone{
+    font-size: 10px;
+    color: #2b2b2b;
+}
 .service{
     font-family: 'Roboto', sans-serif;
     font-size: 12px;

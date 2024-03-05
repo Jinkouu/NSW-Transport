@@ -319,13 +319,18 @@ searchBtn.addEventListener("click", ()=>{
 
                 const time = document.createElement("div");
                 time.classList.add("time");
-                time.textContent = depart.toLocaleString('en-US', {
+                const timeSettings = {
                     hour: 'numeric',
                     minute: 'numeric',
                     second: 'numeric',
                     hour12: true,
                     timeZoneName: 'short'
-                });
+                };
+                const formattedTime = depart.toLocaleString('en-US', timeSettings);
+                const [timeWithoutZone,  timeZone] = formattedTime.split(/(?=\s[A-Z]{3}$)/);
+                const timeSpan = document.createElement("span");
+                timeSpan.textContent = timeZone;
+                time.innerHTML = `${timeWithoutZone}<span id='timezone'>${timeZone}</span>`;
 
                 const service = document.createElement("div");
                 service.classList.add("service");
