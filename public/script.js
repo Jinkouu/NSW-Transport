@@ -9,7 +9,7 @@ function fetchLocations(location) {
     return new Promise((resolve, reject) => {
         const params = {
             outputFormat: 'rapidJSON',
-            type_sf: 'any',
+            type_sf: 'stop',
             name_sf: `${location}`,
             coordOutputFormat: 'EPSG:4326',
             anyMaxSizeHitList: 5
@@ -45,18 +45,9 @@ function completeStartSearch(){ //matches new input box values
     startSearchBox.value = val;
 }
 startSearch.addEventListener("click", ()=>{ //start search dropdown
-    completeStartSearch()
-    if (location.length) {
-        fetchLocations(location)
-            .then(data => {
-                data.forEach((entry) => stations.push(entry.name));
-                console.log(stations);
-                displayStartResult(stations);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
+    const location = startSearch.value;
+    completeStartSearch();
+    fetchStartLocations(location);
 });
 startSearchBox.addEventListener('keypress', (e) =>{ 
     if (e.key === 'Enter'){
@@ -65,6 +56,9 @@ startSearchBox.addEventListener('keypress', (e) =>{
 })
 startSearchBox.addEventListener("keyup", ()=>{
     const location = startSearchBox.value;
+    fetchStartLocations(location);
+})
+function fetchStartLocations(location){
     var stations = [];
 
     if (location.length) {
@@ -78,12 +72,13 @@ startSearchBox.addEventListener("keyup", ()=>{
                 console.error(error);
             });
     }
-})
+}
 const startResultsBox = document.getElementById("start-result-box");
 //updates the html to add location to the dropdown
 function displayStartResult(stations){
     const content = stations.map((station) =>{
         const stationJSON = JSON.stringify(station);
+        //console.log(station.name);
         return "<li onclick='selectStartInput(" + stationJSON + ")'>" + station.name + "</li>";
     })
 
@@ -111,18 +106,9 @@ function completeEndSearch(){
     endSearchBox.value = val;
 }
 endSearch.addEventListener("click", ()=>{
+    const location = endSearch.value;
     completeEndSearch()
-    if (location.length) {
-        fetchLocations(location)
-            .then(data => {
-                data.forEach((entry) => stations.push(entry.name));
-                console.log(stations);
-                displayEndResult(stations);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
+    fetchEndLocations(location);
 });
 endSearchBox.addEventListener("keypress", (e) =>{
     if (e.key === "Enter"){
@@ -131,6 +117,9 @@ endSearchBox.addEventListener("keypress", (e) =>{
 })
 endSearchBox.addEventListener("keyup", ()=>{
     const location = endSearchBox.value;
+    fetchEndLocations(location);
+})
+function fetchEndLocations(location){
     var stations = [];
 
     if (location.length) {
@@ -144,7 +133,7 @@ endSearchBox.addEventListener("keyup", ()=>{
                 console.error(error);
             });
     }
-})
+}
 const endResultsBox = document.getElementById("end-result-box");
 //updates the html to add location to the dropdown
 function displayEndResult(stations){
@@ -267,7 +256,7 @@ searchBtn.addEventListener("click", ()=>{
                     // This is indicated by the departure time of the first leg.
                     if(legNumber == 0){
                         depart = new Date(origin.departureTimePlanned);
-                        stationSummary.push(leg.origin.disassembledName)
+                        stationSummary.push(leg.origin.disassembledName);
                         trainLine = leg.transportation.disassembledName;
                     }
 
@@ -276,7 +265,6 @@ searchBtn.addEventListener("click", ()=>{
                     }
 
                     const transportation = leg.transportation;
-                    trainLineSummary.push(transportation.disassembledName);
 
                     const stationTransfer = leg.destination.disassembledName;
                     stationSummary.push(stationTransfer)
@@ -293,6 +281,14 @@ searchBtn.addEventListener("click", ()=>{
                         case 100: summary.push('Walk'); break;
                         case 107: summary.push('Cycle'); break;
                     }
+
+                    if (routeType == 100){
+                        trainLineSummary.push("Walk");
+                    }
+                    else{
+                        trainLineSummary.push(transportation.disassembledName);
+                    }
+
                     legNumber += 1;
                 });
 
@@ -319,18 +315,13 @@ searchBtn.addEventListener("click", ()=>{
 
                 const time = document.createElement("div");
                 time.classList.add("time");
-                const timeSettings = {
+                time.textContent = depart.toLocaleString('en-US', {
                     hour: 'numeric',
                     minute: 'numeric',
                     second: 'numeric',
                     hour12: true,
                     timeZoneName: 'short'
-                };
-                const formattedTime = depart.toLocaleString('en-US', timeSettings);
-                const [timeWithoutZone,  timeZone] = formattedTime.split(/(?=\s[A-Z]{3}$)/);
-                const timeSpan = document.createElement("span");
-                timeSpan.textContent = timeZone;
-                time.innerHTML = `${timeWithoutZone}<span id='timezone'>${timeZone}</span>`;
+                });
 
                 const service = document.createElement("div");
                 service.classList.add("service");
@@ -355,8 +346,11 @@ searchBtn.addEventListener("click", ()=>{
                 //////////////////////////////// stops + fare
                 const stops = document.createElement("div");
                 stops.classList.add("stops");
-                if(stopNumber > 0){
+                if(stopNumber == 1){
                     stops.textContent = stopNumber + " stop";
+                }
+                else if(stopNumber > 1){
+                    stops.textContent = stopNumber + " stops";
                 }
                 else{
                     stops.textContent = "Nonstop";
